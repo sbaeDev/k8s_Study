@@ -1,6 +1,8 @@
 # k8s_Study
 
 - [강의 사이트](https://kubetm.github.io/k8s/)
+- [인프런 강의](https://www.inflearn.com/course/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-%EA%B8%B0%EC%B4%88)
+- 모든 사진, 자료는 해당 강의를 참조하였습니다.
 
 ## 목차
 
