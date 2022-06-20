@@ -21,17 +21,17 @@
 
 ### 설치 전 설정사항
 
-| <span style="color:rgb(245, 109, 5)">NAME</span> | <span style="color:rgb(245, 109, 5)">IP</span> | <span style="color:rgb(245, 109, 5)">CORE.RAM</span> | <span style="color:rgb(245, 109, 5)">VOLUME</span> | <span style="color:rgb(245, 109, 5)">OS</span> |
+| NAME | IP | CORE.RAM | VOLUME | OS |
 |:-----:|:--:|:----:|:--:|:--:|
-| <span style="color:rgb(5, 101, 245)">vm-sbae-master</span> | <span style="color:rgb(5, 101, 245)">192.168.77.71</span> | 8Core.4G | 30GB | ubuntu20.04 |
-| <span style="color:rgb(5, 101, 245)">vm-sbae-node1</span> | <span style="color:rgb(5, 101, 245)">192.168.77.72</span> | 8Core.4G | 30GB | ubuntu20.04 |
-| <span style="color:rgb(5, 101, 245)">vm-sbae-node2</span> | <span style="color:rgb(5, 101, 245)">192.168.77.73</span> | 8Core.4G | 30GB | ubuntu20.04 |
-| <span style="color:rgb(5, 101, 245)">vm-sbae-node3</span> | <span style="color:rgb(5, 101, 245)">192.168.77.74</span> | 8Core.4G | 30GB | ubuntu20.04 |
-| <span style="color:rgb(5, 101, 245)">▲ 최신 버전 설치</span> | <span style="color:rgb(245, 47, 49)">▼ 구 버전 설치</span> | 구 버전은 강의용 | |  |
-| <span style="color:rgb(245, 47, 49)">vm-sbae-master_ver2</span> | <span style="color:rgb(245, 47, 49)">192.168.77.75</span> | 8Core.4G | 30GB | ubuntu20.04 |
-| <span style="color:rgb(245, 47, 49)">vm-sbae-node1_ver2</span> | <span style="color:rgb(245, 47, 49)">192.168.77.76</span> | 8Core.4G | 30GB | ubuntu20.04 |
-| <span style="color:rgb(245, 47, 49)">vm-sbae-node2_ver2</span> | <span style="color:rgb(245, 47, 49)">192.168.77.77</span> | 8Core.4G | 30GB | ubuntu20.04 |
-| <span style="color:rgb(245, 47, 49)">vm-sbae-node3_ver2</span> | <span style="color:rgb(245, 47, 49)">192.168.77.78</span> | 8Core.4G | 30GB | ubuntu20.04 |
+| vm-sbae-master | 192.168.77.71 | 8Core.4G | 30GB | ubuntu20.04 |
+| vm-sbae-node1 | 192.168.77.72 | 8Core.4G | 30GB | ubuntu20.04 |
+| vm-sbae-node2 | 192.168.77.73 | 8Core.4G | 30GB | ubuntu20.04 |
+| vm-sbae-node3 | 192.168.77.74 | 8Core.4G | 30GB | ubuntu20.04 |
+| ▲ 최신 버전 설치 | ▼ 구 버전 설치 | 구 버전은 강의용 | |  |
+| vm-sbae-master_ver2 | 192.168.77.75 | 8Core.4G | 30GB | ubuntu20.04 |
+| vm-sbae-node1_ver2 | 192.168.77.76 | 8Core.4G | 30GB | ubuntu20.04 |
+| vm-sbae-node2_ver2 | 192.168.77.77 | 8Core.4G | 30GB | ubuntu20.04 |
+| vm-sbae-node3_ver2 | 192.168.77.78 | 8Core.4G | 30GB | ubuntu20.04 |
 
 ---
 
