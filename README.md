@@ -16,6 +16,7 @@
       - [kubeadm init 오류시 실행](#kubeadm-init-오류시-실행)
       - [token 만료 시 생성](#token-만료-시-생성)
     - [Study md file](#study-md-file)
+    - [shell script](#shell-script)
 
 ---
 
@@ -135,7 +136,6 @@
 
     sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg <https://packages.cloud.google.com/apt/doc/apt-key.gpg>
 
-
     sudo echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] <https://apt.kubernetes.io/> kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
     sudo apt-get update
@@ -205,3 +205,8 @@ echo "source <(kubeadm completion bash)" >> ~/.bashrc
 
 - __[기초편](%EA%B8%B0%EC%B4%88%ED%8E%B8.md)__
 - __[중급편](%EC%A4%91%EA%B8%89%ED%8E%B8.md)__
+
+### shell script
+
+- 🌟 6.23 작성 / 아직 테스트안함 🌟
+- 기본적으로 root에서 실행
