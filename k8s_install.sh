@@ -56,6 +56,6 @@ sudo systemctl enable kubelet
 
 # Automatic command completion
 source <(kubectl completion bash)
-echo "source <(kubectl completion bash)" >> ~/.bashrc
+echo "source <(kubectl completion bash)" >>~/.bashrc
 source <(kubeadm completion bash)
-echo "source <(kubeadm completion bash)" >> ~/.bashrc
+echo "source <(kubeadm completion bash)" >>~/.bashrc
