@@ -174,8 +174,9 @@
       - ex) kubeadm join __IP:PORT__ --token __Token값__ --discovery-token-ca-cert-hash sha256:__Hash__
     - mkdir -p $HOME/.kube
     - sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-    - sudo chown \$(id -u):\$(id -g) $HOME/.kube/config
+    - `sudo chown $(id -u):$(id -g) $HOME/.kube/config`
     - kubectl apply -f "<https://cloud.weave.works/k8s/net?k8s-version=$(kubectl> version | base64 | tr -d '\n')"
+
 2. __node에서 실행__
     - kubeadm join __IP:PORT__ --token __Token값__ --discovery-token-ca-cert-hash sha256:__Hash__
     - (master) kubectl get nodes
