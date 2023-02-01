@@ -1,0 +1,327 @@
+# 파드 생성하지않고 yaml만 생성
+# --dry-run=client
+kubectl run 이름 --image=이미지명 --dry-run=client -o yaml > 파일명.yaml
+
+# 수정
+kubectl edit
+
+# service 만들 때
+kubectl expose
+kubectl expose pod redis --port=6379 --name redis-service
+
+# scale 수정
+kubectl scale rs 이름 --replicas 숫자
+
+# NGINX 만들기
+
+kubectl run nginx --image=nginx
+
+# deployment 생성
+kubectl create deployment --image=nginx nginx
+
+# k8s 버전 1.19+에서는 --replicas 옵션을 지정하여 4개의 복제본으로 전개를 작성할 수 있습니다.
+kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
+
+# 자세히 보기
+kubectl describe
+
+# 많이 보기
+kubectl get pod -o wide
+
+# 모든 파드 보기
+kubectl get pods -A
+
+# namespace 갯수
+kubectl get ns --no-headers | wc -l
+
+# 다른 namespace pod 접속
+db-service.dev.svc.cluster.local
+
+# NGINX 팟 만들기
+kubectl run nginx --image=nginx
+
+# 4개의 복제본으로 배포 생성
+kubectl create deployment nginx --image=nginx --replicas=4
+
+# 또, 를 사용해 전개를 확장할 수도 있습니다.kubectl scale명령어를 입력합니다.
+kubectl scale deployment nginx --replicas=4
+
+# 또 다른 방법은 YAML 정의를 파일에 저장하고 수정하는 것입니다.
+kubectl create deployment nginx --image=nginx --dry-run=client -o yaml > nginx-deployment.yaml
+
+# 클러스터 유형의 redis-service라는 이름의 서비스를 생성합니다.포트 6379에서 팟 redis를 노출하는 IP
+kubectl expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml
+(이렇게 하면 자동으로 포드의 라벨이 선택기로 사용됩니다.)
+kubectl create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml(이렇게 하면 포드 라벨이 셀렉터로 사용되지 않고 셀렉터가 app=redis로 간주됩니다. 선택기를 옵션으로 전달할 수 없습니다.따라서 팟에 다른 라벨 세트가 있으면 잘 작동하지 않습니다.따라서 서비스를 작성하기 전에 파일을 생성하고 실렉터를 수정하십시오.)
+
+#NodePort 유형의 nginx라는 이름의 서비스를 생성하여 노드의 포트 30080에서 포드 nginx의 포트 80을 표시합니다.
+kubectl expose pod nginx --type=NodePort --port=80 --name=nginx-service --dry-run=client -o yaml
+(이렇게 하면 자동으로 포드의 라벨이 셀렉터로 사용되지만 노드 포트를 지정할 수 없습니다.정의 파일을 생성한 후 수동으로 노드 포트를 추가한 후 팟을 사용하여 서비스를 생성해야 합니다).
+kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run=client -o yaml
+(이렇게 하면 포드 라벨이 셀렉터로 사용되지 않습니다.)
+위의 두 명령어 모두 고유한 문제가 있습니다.한쪽은 실렉터를 받아들일 수 없지만 다른 한쪽은 노드 포트를 받아들일 수 없습니다.추천할 수 있는 것은kubectl expose명령어를 입력합니다.노드 포트를 지정해야 할 경우 서비스를 생성하기 전에 동일한 명령을 사용하여 정의 파일을 생성하고 노드 포트를 수동으로 입력합니다.
+
+# select
+kubectl get all --selector bu=finance,tier=frontend,env=prod
+
+# taint
+kubectl taint nodes node-name key=value:Effect  ex)taint-effect
+kubectl taint nodes node-name key=value:taint-effect- -넣으면 제거
+kubectl taint nodes node-name key=value:taint-effect+ +넣으면 추가
+
+# label node
+kubectl label nodes <node-name> <key=value>
+
+# static pod
+grep -i staticpod /var/lib/kubelet/config.yaml
+cat /var/lib/kubelet/config.yaml
+
+# top
+kubectl top pod containername
+
+# log
+kubectl logs -f podname
+k logs webapp-pay-77f6bf45f6-mkg5n -n critical-space
+
+# configmap
+kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue
+
+# node 정지
+kubectl drain node01 --ignore-daemonsets
+
+# node 예약 불가능하기하기
+kubectl cordon node01
+
+# node에 다시 예약가능
+kubectl uncordon node01
+
+# k8s 업데이트
+kubectl drain node
+
+apt update
+
+apt-get install kubeadm=1.25.0-00
+
+kubeadm upgrade apply v1.25.0
+
+apt-get install kubelet=1.25.0-00
+
+systemctl daemon-reload
+systemctl restart kubelet
+
+kubectl uncordon node
+
+# etcd backup
+export ETCDCTL_API=3
+
+etcdctl --endpoints=127.0.0.1:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
+snapshot save /opt/snapshot-pre-boot.db
+
+# 복구
+etcdctl snapshot restore /opt/snapshot-pre-boot.db
+
+# 인증서
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# CA
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
+openssl x509 -in /etc/kubernetes/pki/etcd/server.crt -text
+127.0.0.1:2379는 etcd server
+openssl x509 -in /etc/kubernetes/pki/ca.crt -text
+
+# 한줄로
+cat akshay.csr | base64 -w 0
+# 인증서 승인?
+kubectl certificate approve akshay
+# 인증서 거부
+kubectl certificate deny
+
+# context
+kubectl config view
+
+# context 추가
+kubectl config use-context user@cluster
+kubectl config use-context research --kubeconfig my-kube-config
+
+# 정책보기
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+# role
+kubectl get role
+# 접근 가능한 그룹
+kubectl describe rolebindings -n kube-system kube-proxy
+
+kubectl config view
+
+# role 생성
+k create role developer --verb=list,create,delete --resource=pods
+# role binding
+k create rolebinding dev-user-binding --role=developer --user=dev-user
+
+# ?????
+k --as dev-user get pod dark-blue-app -n blue
+
+# clusterRole, binding 보기
+kubectl get clusterrole
+
+# clusterRole, binding 설정
+k create clusterrole michelle-role --verb=get,list,watch --resource=nodes
+k create clusterrolebinding michelle-role-binding --clusterrole=michelle-role --user=michelle
+
+k create clusterrole storage-admin --resource persistentvolumes,storageclasses --verb list,create,get,watch
+k create clusterrolebinding michelle-storage-admin --clusterrole storage-admin --user michelle
+
+# 자격증명, 레지스트리, 시크릿 생성
+kubectl create secret docker-registry private-reg-cred --docker-username=dock_user --docker-password=dock_password --docker-server=myprivateregistry.com:5000 --docker-email=dock_user@myprivateregistry.com
+
+# container 접속
+kubectl exec --stdin --tty ubuntu-sleeper -- /bin/bash
+
+# network policy
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: internal-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      name: internal
+  policyTypes:
+  - Egress
+  - Ingress
+  ingress:
+    - {}
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: mysql
+    ports:
+    - protocol: TCP
+      port: 3306
+
+  - to:
+    - podSelector:
+        matchLabels:
+          name: payroll
+    ports:
+    - protocol: TCP
+      port: 8080
+```
+
+# IP
+ip link
+ip addr show ---
+ip route
+ip a | grep -B2 10.13.120.12
+ip route show default
+netstat -natulp | grep kube-scheduler
+netstat -anp | grep etcd
+
+# CNI
+ps -aux | grep kubelet | grep --color container
+/opt/cni/bin
+/etc/cni/net.d
+
+k exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
+
+# ingress
+k create ingress test-ingress --namespace critical-space --rule="/pay=pay-service:8282" --dry-run=client -o yaml > 22.yaml
+annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+# ns안쳐도됨
+k config set-context --current --namespace beta
+
+# api, controller, scheduler
+/etc/kubernetes/manifests
+/var/log/pods/
+배치관련 문제는 스케쥴러
+복제관련 컨트롤러 /etc/kubernetes/controller-manager.
+
+# node troubleshooting
+service kubelet start
+
+# node log보기
+journalctl -u kubelet -f
+/etc/kubernetes/kubelet.conf
+/var/lib/kubelet/config.yaml
+마스터 노드 포트연결은 6443
+
+# CSR
+https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/#create-certificatesigningrequest
+# role
+k create role developer --namespace development --resource pods --verb create,list,get,update,delete
+# rolebind
+kubectl create rolebinding john-developer --role developer --user john -n development
+
+
+kubectl run nginx-resolver --image=nginx
+kubectl expose pod nginx-resolver --name=nginx-resolver-service --port=80 --target-port=80 --type=ClusterIP
+
+kubectl run test-nslookup --image=busybox:1.28 --rm -it --restart=Never -- nslookup nginx-resolver-service
+kubectl run test-nslookup --image=busybox:1.28 --rm -it --restart=Never -- nslookup nginx-resolver-service > /root/CKA/nginx.svc
+
+kubectl get pod nginx-resolver -o wide
+kubectl run test-nslookup --image=busybox:1.28 --rm -it --restart=Never -- nslookup <P-O-D-I-P.default.pod> > /root/CKA/nginx.pod
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: multi-pod
+  name: multi-pod
+spec:
+  containers:
+  - name: alpha
+    image: nginx
+    env:
+      - name: "name"
+        value: alpha
+  - command:
+    - sleep
+    - "4800"
+    image: busybox
+    name: beta
+    env:
+      - name: "name"
+        value: "beta"
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: prod-redis
+  name: prod-redis
+spec:
+  containers:
+  - image: redis:alpine
+    name: prod-redis
+    resources: {}
+  tolerations:
+  - key: "env_type"
+    operator: "Equal"
+    value: "production"
+    effect: "NoSchedule"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+k get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' > /root/CKA/node_ips
+
+k run curl --image=alpine/curl --rm -it -- sh
+
+안되면 정적파드검색
